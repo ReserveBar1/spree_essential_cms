@@ -31,11 +31,22 @@ class ::Admin::PagesController < ::Admin::ResourceController
       @page ||= Page.find_by_path(params[:id])
     end
   
-    def collection
-      params[:search] ||= {}
-      params[:search][:meta_sort] ||= "page.asc"
+#    def collection
+#      params[:search] ||= {}
+#      params[:search][:meta_sort] ||= "page.asc"
+#      @search = Page.metasearch(params[:search])
+#      @collection = @search.paginate(:per_page => Spree::Config[:orders_per_page], :page => params[:page])
+#    end
+    
+	def collection
+    return @collection if @collection.present?
+
+    unless request.xhr?
       @search = Page.metasearch(params[:search])
-      @collection = @search.paginate(:per_page => Spree::Config[:orders_per_page], :page => params[:page])
+      @collection = @search.relation.page(params[:page]).per(Spree::Config[:orders_per_page])
+    else
+      @collection = Page.where("pages.title #{LIKE} :search", {:search => "#{params[:q].strip}%"}).limit(params[:limit] || 100)
     end
+  end
 
 end
