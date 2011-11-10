@@ -27,16 +27,9 @@ class ::Admin::PagesController < ::Admin::ResourceController
 
   private
   
-    def find_resource
-      @page ||= Page.find_by_path(params[:id])
-    end
-  
-#    def collection
-#      params[:search] ||= {}
-#      params[:search][:meta_sort] ||= "page.asc"
-#      @search = Page.metasearch(params[:search])
-#      @collection = @search.paginate(:per_page => Spree::Config[:orders_per_page], :page => params[:page])
-#    end
+  def find_resource
+    @page ||= Page.find_by_path(params[:id])
+  end
     
 	def collection
     return @collection if @collection.present?

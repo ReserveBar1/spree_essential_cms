@@ -18,15 +18,19 @@ class ::Admin::ContentsController < ::Admin::ResourceController
   
   private
     
-    def parent
-	    @page ||= Page.find_by_path(params[:page_id])
-    end
+  def parent
+    @page ||= Page.find_by_path(params[:page_id])
+  end
     
-    def collection
-      params[:search] ||= {}
-      params[:search][:meta_sort] ||= "page.asc"
+	def collection
+    return @collection if @collection.present?
+
+    unless request.xhr?
       @search = parent.contents.metasearch(params[:search])
-      @collection = @search.paginate(:per_page => Spree::Config[:orders_per_page], :page => params[:page])
+      @collection = @search.relation.page(params[:page]).per(Spree::Config[:orders_per_page])
+    else
+      @collection = Content.where("contents.title #{LIKE} :search", {:search => "#{params[:q].strip}%"}).limit(params[:limit] || 100)
     end
+  end
 
 end
