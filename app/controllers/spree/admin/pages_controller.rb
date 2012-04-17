@@ -27,15 +27,15 @@ class Spree::Admin::PagesController < Spree::Admin::ResourceController
 
   private
 
-    def find_resource
-      @page ||= ::Spree::Page.find_by_path(params[:id])
-    end
+  def find_resource
+    @page ||= ::Spree::Page.find_by_path(params[:id])
+  end
 
-    def collection
-      params[:search] ||= {}
-      params[:search][:meta_sort] ||= "page.asc"
-      @search = Spree::Page.metasearch(params[:search])
-      @collection = @search.page(params[:page]).per(Spree::Config[:orders_per_page])
-    end
+  def collection
+    params[:search] ||= {}
+    params[:search][:meta_sort] ||= "page.asc"
+    @search = Spree::Page.metasearch(params[:search])
+    @collection = @search.page(params[:page]).per(Spree::Config[:orders_per_page])
+  end
 
 end
