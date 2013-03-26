@@ -11,6 +11,7 @@ module SpreeEssentials
         migration_template "create_pages.rb",    "db/migrate/create_pages.rb"
         migration_template "create_contents.rb", "db/migrate/create_contents.rb"
         migration_template "add_spree_namespace.rb", "db/migrate/add_spree_namespace.rb"
+        migration_template "create_pages_products.rb", "db/migrate/create_pages_products.rb"
       end
 
     end

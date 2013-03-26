@@ -1,0 +1,32 @@
+<% content ||= @content %>
+<% image_size ||= :medium %>
+<% html ||= false %>
+<% content_counter ||= 0 %>
+
+<% unless content.nil? %>
+  
+  <div class="content<%= ' alt' if content_counter % 2 == 0 %>" id="<%= dom_id(content) %>">
+    
+    
+    <div class="content-main">
+      <% unless content.hide_title? %>
+        <h1 class="title"><%= content.title %></h1>
+      <% end %>
+    <% if content.has_image? %>
+		<%= image_tag content.attachment.url(image_size), :alt => content.title, :class => 'in-content' %>
+    <% end %>
+      
+      <%= content.rendered_body %>
+      
+      <% if content.has_full_link? %>
+        <%= link_to content.link_text || 'read more', content.link %>
+      <% end %>
+    </div>    
+  
+    <br class="clear"/>
+        
+  </div>
+  
+  <br class="clear"/>
+
+<% end %>

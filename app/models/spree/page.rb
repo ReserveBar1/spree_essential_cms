@@ -13,6 +13,9 @@ class Spree::Page < ActiveRecord::Base
   has_many :contents, :order => :position, :dependent => :destroy
   has_many :images, :as => :viewable, :class_name => 'Spree::PageImage', :order => :position, :dependent => :destroy
   
+  has_many :page_products, :order => :position, :dependent => :destroy
+  has_many :products, :through => :page_products, :order => :position
+  
   before_validation :set_defaults
   after_create :create_default_content
   
@@ -45,6 +48,36 @@ class Spree::Page < ActiveRecord::Base
   
   def root?
     self.path == "/"
+  end
+  
+  # Mock up products
+  # def products
+  #   products = []
+  #   products << Spree::Product.find_by_permalink('johnnie-walker-blue-label')
+  #   products << Spree::Product.find_by_permalink('brut-yellow-label')
+  #   products << Spree::Product.find_by_permalink('tanqueray-rangpur')
+  #   products << Spree::Product.limit(8)
+  #   products.flatten
+  # end
+  
+  def has_products?
+    products.count
+  end
+  
+  def primary_products
+    begin
+      products[0..2]
+    rescue
+      nil
+    end
+  end
+  
+  def secondary_products
+    begin
+      products[3..-1]
+    rescue
+      nil
+    end
   end
   
   private

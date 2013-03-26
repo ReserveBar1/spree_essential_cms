@@ -1,0 +1,38 @@
+<% if @page.has_context?('aside') %>
+	<aside id="sidebar" class="columns alpha four" data-hook>
+    	<%= render 'spree/shared/aside', :content => @page.for_context('aside').first %>
+  	</aside>
+<% end %>
+
+
+<div id="content" class="columns omega twelve" data-hook>
+	<% if @page.has_context?('intro') %>
+		<div id="intro"  data-hook>
+	    	<%= render 'spree/shared/content', :content => @page.for_context('intro').first %>
+	  	</div>
+	<% end %>
+
+
+	<div class="product-showcase-content">
+	<% if @page.primary_products %>
+	     <%= render :partial => 'spree/shared/primary_products', :locals => { :products => @page.primary_products } %>
+	<% end %>
+	<hr /><br />
+
+
+	<% if @page.secondary_products %>
+	    <%= render :partial => 'spree/shared/products', :locals => {:products => @page.secondary_products } %>
+	<% end %>
+
+	</div>
+
+	<hr /><br />
+
+	<div>
+		<h3>Subscribe to our free newsletter</h3>
+		Receive promotions, special offers and invitations to exclusive events
+		<%= render :partial => 'spree/shared/newsletter_subscription_form' %>
+		<p style="font-size:12px;">By clicking Submit, you agree to ReserveBar's <a href='/pages/privacy-policy'>privacy policy</a>.</p>
+	</div>
+
+</div>

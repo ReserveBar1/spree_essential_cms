@@ -1,0 +1,40 @@
+<% if products.any? %>
+<ul id="products" class="inline product-listing" data-hook>
+  <% products.each do |product| %>
+    <% if Spree::Config[:show_zero_stock_products] || product.has_stock? %>
+      <li id="product_<%= product.id %>" class="columns four <%= cycle("alpha", "secondary", "omega secondary", :name => "product_tiles") %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+        <div class="product-image" style="float:left;max-width:100px;">
+          <%= link_to product_image(product, :itemprop => "name"), product %>
+        </div>
+		<div style="float:left;min-height:160px;text-align:left;width:110px;">
+			<div style="height:160px;overflow-y:hidden;">
+	        	<%= link_to sanitize(product.tile_title, :tags => %w(sup)), product, :class => 'product-tile-name', :itemprop => "name", :title => product.tile_title %>
+				<div style="font-weight:normal;display:block;"><%= truncate(product.description, :length => 120) -%></div>
+			</div>
+
+			<% if product.shipping_category.name == 'Non Shipping' %>
+				<%= link_to 'See Details', product %>
+			<% else %>
+        		<div class="price selling" itemprop="price" style="margin-bottom:6px;"><%= number_to_currency product.price %></div>
+		        <%= form_for :order, :url => populate_orders_url, :remote => true do |f| %>
+		          <%= hidden_field_tag "variants[#{product.master.id}]", 1, :size => 3 %>
+				  <%= hidden_field_tag "source", "tile" %>
+		          <%= link_to t(:add_to_cart), '#', :onclick => "$(this).parent().submit(); return false;", :class => "button add-to-cart", :id => "add_to_cart_sku_#{product.master.sku}" %>
+		<% if product.brand.brand_owner.title == 'Diageo' %>
+			<%= javascript_tag do %>
+					$("#add_to_cart_sku_<%= product.master.sku -%>").on('click', function() {
+							$(document).trigger('itemAddedToCart', ['<%= product.master.sku -%>', '<%= product.name -%>', '<%= product.brand.title -%>']);
+					});
+			<% end %>
+		<% end %>
+				<% end %>
+	        <% end %>
+
+		</div>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+<% end %>
+
+<% reset_cycle("product_tiles") %>

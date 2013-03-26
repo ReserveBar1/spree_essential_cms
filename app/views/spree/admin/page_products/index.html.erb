@@ -1,0 +1,45 @@
+<%= render :partial => 'spree/admin/shared/page_tabs', :locals => {:current => "Products"} %>
+
+<table class="index sortable" data-sortable-link="<%= update_positions_admin_page_products_url(@page) -%>">
+	<tr>
+	  <th><%= t("thumbnail") %></th>
+	  <th><%= t("sku") %></th>
+	  <th><%= t("title") %></th>
+	  <th><%= t("action") %></th>
+	</tr>
+ 
+  <% @page.page_products.each do |page_product| %>
+    <tr id="<%= dom_id(page_product).sub('page_', '') %>">
+      <td><span class="handle">&nbsp;</span>&nbsp; <%= link_to mini_image(page_product.product, :itemprop => "name"), page_product.product %></td>
+
+      <td><%= page_product.product.master.sku %></td>
+      <td><%= page_product.product.name %></td>
+      <td class="actions">
+        <%= link_to_with_icon('edit', t("edit"), edit_admin_page_product_url(@page, page_product)) %>
+        &nbsp;
+        <%= link_to_delete page_product, {:url => admin_page_product_url(@page, page_product) }%>
+      </td>
+    </tr>
+  <% end %>
+ 
+</table>
+
+<div id="products"></div>
+<br/>
+<p>
+    <%= link_to icon('add') + ' ' + t("new_product"), new_admin_page_product_url(@page), :id => "new_product_link" %>
+</p>
+
+<% content_for :head do %>
+  <script type="text/javascript">
+    jQuery(document).ready(function(){  
+      
+      jQuery('#new_product_link').click(function (event) { 
+        event.preventDefault();
+        jQuery(this).hide();
+        jQuery.ajax({type: 'GET', url: this.href, data: ({authenticity_token: AUTH_TOKEN}), success: function(r){ jQuery('#products').html(r);} });
+      });
+      
+    });
+  </script>
+<% end %>

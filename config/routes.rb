@@ -27,6 +27,13 @@ Spree::Core::Engine.routes.draw do
           post :update_positions
         end
       end
+      
+      resources :products, :controller => "page_products" do
+        collection do
+          post :update_positions
+        end
+      end
+      
     end
 
   end

@@ -11,7 +11,7 @@
 
 <h2><%= t('.listing_contents') %></h2>
 
-<table class="index sortable">
+<table class="index sortable"  data-sortable-link="<%= update_positions_admin_page_contents_url(@page) -%>">
   <thead>
 	<tr>
     	<th><%= sort_link @search, :title, t("content.title") %></th>

@@ -7,6 +7,8 @@ class Spree::PagesController < Spree::BaseController
       @posts    = Spree::Post.live.limit(5)    if SpreeEssentials.has?(:blog)
       @articles = Spree::Article.live.limit(5) if SpreeEssentials.has?(:news)
       render :template => 'spree/pages/home'
+    elsif @page.has_products?
+      render :template => 'spree/pages/product_showcase'
     end
   end
 

@@ -1,0 +1,4 @@
+<p>
+  <%= form.label :product %>:<br/>
+  <%= form.collection_select :product_id, Spree::Product.active.order('name ASC'), :id, :name %>
+</p>
