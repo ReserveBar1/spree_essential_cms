@@ -49,19 +49,9 @@ class Spree::Page < ActiveRecord::Base
   def root?
     self.path == "/"
   end
-  
-  # Mock up products
-  # def products
-  #   products = []
-  #   products << Spree::Product.find_by_permalink('johnnie-walker-blue-label')
-  #   products << Spree::Product.find_by_permalink('brut-yellow-label')
-  #   products << Spree::Product.find_by_permalink('tanqueray-rangpur')
-  #   products << Spree::Product.limit(8)
-  #   products.flatten
-  # end
-  
+    
   def has_products?
-    products.count
+    products.count > 0
   end
   
   def primary_products
