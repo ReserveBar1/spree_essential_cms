@@ -15,9 +15,13 @@ class Spree::PagesController < Spree::BaseController
   private
 
     def get_page
-      @page = Spree::Page.includes(:images, :contents).active.find_by_path(page_path) rescue nil
+      # The original includes url parameters, which wreaks havoc on google campaigns, but we still want to be able to raise the url with the parameters
+      # So we search without url parameters for 
+      ##@page = Spree::Page.includes(:images, :contents).active.find_by_path(page_path) rescue nil
+      @page = Spree::Page.includes(:images, :contents).active.find_by_path(page_path.split('?').first) rescue nil
       raise ActionController::RoutingError.new(page_path) if @page.nil?
     end
+
 
     def page_path
       params[:page_path].blank? ? "/" : params[:page_path]
