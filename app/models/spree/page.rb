@@ -19,6 +19,15 @@ class Spree::Page < ActiveRecord::Base
   before_validation :set_defaults
   after_create :create_default_content
   
+  # Preferences for including the news letter subscription on a page
+  # source will be stored with the newsletter subscription for tracking
+  # redirect_url is for the next page after the user sumbitted an email
+  preference :show_newsletter_form, :boolean, :default => false
+  preference :newsletter_source, :string, :default => ''
+  preference :newsletter_redirect_url, :string, :default => ''
+  preference :newsletter_placeholder, :string, :default => 'Enter your email'
+  preference :newsletter_promo_code, :string, :default => ''
+  
   def self.find_by_path(_path)
     return super('/') if _path == '_home_' && self.exists?(:path => '/')
     super _path.to_s.sub(/^\/*/, '/').gsub('--', '/')

@@ -9,6 +9,8 @@ class Spree::PagesController < Spree::BaseController
       render :template => 'spree/pages/home'
     elsif @page.has_products?
       render :template => 'spree/pages/product_showcase'
+    elsif @page.prefers_show_newsletter_form?
+      render :template => 'spree/pages/two_column_with_newsletter_form'
     end
   end
 
