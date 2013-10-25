@@ -9,7 +9,7 @@
 		<div style="float:left;min-height:160px;text-align:left;width:110px;">
 			<div style="height:160px;overflow-y:hidden;">
 	        	<%= link_to sanitize(product.tile_title, :tags => %w(sup)), product, :class => 'product-tile-name', :itemprop => "name", :title => product.tile_title %>
-				<div style="font-weight:normal;display:block;"><%= truncate(product.description, :length => 120) -%></div>
+				<div style="font-weight:normal;display:block;max-height:125px;overflow:hidden;"><%= product.description.html_safe -%></div>
 			</div>
 
 			<% if product.shipping_category.name == 'Non Shipping' %>
