@@ -14,7 +14,7 @@
 
 
 	<% if @page.prefers_show_newsletter_form? %>
-		<div>
+		<div class="newsletter-form">
 			<%= render :partial => 'spree/shared/newsletter_subscription_form', :locals => {:source => @page.preferred_newsletter_source, :placeholder => @page.preferred_newsletter_placeholder, :redirect_to => @page.preferred_newsletter_redirect_url, :promo_code => @page.preferred_newsletter_promo_code, :ask_name => true} %>
 			<p style="font-size:12px;">By clicking Submit, you agree to ReserveBar's <a href='/pages/privacy-policy'>privacy policy</a>.</p>
 		</div>

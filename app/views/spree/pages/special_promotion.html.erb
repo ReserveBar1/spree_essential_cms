@@ -1,0 +1,54 @@
+<% if @page.has_context?('aside') %>
+	<aside id="sidebar" class="columns alpha four" data-hook>
+    	<%= render 'spree/shared/aside', :content => @page.for_context('aside').first %>
+  	</aside>
+<% end %>
+
+
+<div id="content" class="columns omega twelve" data-hook>
+	<% if @page.has_context?('intro') %>
+		<div id="intro"  data-hook>
+	    	<%= render 'spree/shared/content', :content => @page.for_context('intro').first %>
+	  	</div>
+	<% end %>
+
+	<div class="newsletter-form">
+		<div>HAPPY HOLIDAYS!</div>
+		<span>To redeem your $25 off Promo Code, subscribe to our free newsletter.</span>
+		<%= render :partial => 'spree/shared/newsletter_subscription_form', :locals => {:source => 'special_promotion', :placeholder => 'Enter your email', :redirect_to => nil, :promo_code => 'Holiday25', :ask_name => false} %>
+		<p style="font-size:12px;">By clicking Submit, you agree to ReserveBar's <a href='/pages/privacy-policy'>privacy policy</a>.</p>
+	</div>
+
+
+	<div class="product-showcase-content">
+	<% if @page.primary_products %>
+	     <%= render :partial => 'spree/shared/primary_products', :locals => { :products => @page.primary_products } %>
+	<% end %>
+	<hr /><br />
+
+
+	<% if @page.secondary_products %>
+	    <%= render :partial => 'spree/shared/primary_products', :locals => {:products => @page.secondary_products } %>
+	<% end %>
+
+	</div>
+
+
+</div>
+
+<style type="text/css">
+.newsletter-form {
+border: 2px solid #C13828;
+padding: 18px;
+text-align: center;
+margin-bottom: 24px;
+}
+.newsletter-form span {color:#888;font-size:14px;font-weight:normal;}
+.newsletter-form div {color: #C13828;
+font-size: 22px;
+font-style: italic;
+font-family: "mrseavesmedium", serif;margin-bottom:8px;}
+</style>
+<script type="text/javascript">
+$('[data-hook="products_list_item"]').last().after('<li><div id="businessGifting" style="display:inline-block;vertical-align:top;padding:0;margin:0;"><p><a href="/businessgifting"><img src="https://staging.reservebar.com/system/attachments/600/large/busGiftingPromo.jpg?1385427785" alt="Learn more about Holiday Business Gifting"></a></p></div></li>');
+</script>
