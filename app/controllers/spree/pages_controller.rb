@@ -16,6 +16,16 @@ class Spree::PagesController < Spree::BaseController
     end
   end
 
+  def hennessy_email_subscription
+    @sub = HennessyEmail.new
+    @sub.email = params[:news_subscription][:email]
+    @sub.opt_in = true if params['optInHennessy'] == 'on'
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
     def get_page
