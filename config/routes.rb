@@ -10,6 +10,12 @@ end
 
 Spree::Core::Engine.routes.draw do
 
+  resources :pages do
+    collection do
+      post :hennessy_email_subscription
+    end
+  end
+
   namespace :admin do
 
     resources :pages do
