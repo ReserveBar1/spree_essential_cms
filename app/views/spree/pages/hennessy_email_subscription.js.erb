@@ -1,0 +1,7 @@
+<% if @sub.save %>
+  $('#news_subscription_email').val('');
+  $('#optInHennessy').attr('checked', false);
+  alert("Thank you! We'll send ordering info to your email address.");
+<% else %>
+  alert("Sorry, wasn't able to save the email. Please try it again.");
+<% end %>
