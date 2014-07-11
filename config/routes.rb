@@ -8,14 +8,16 @@ class Spree::PossiblePage
   end
 end
 
-Spree::Core::Engine.routes.draw do
-
+Spree::Core::Engine.routes.append do
   resources :pages do
     collection do
       post :hennessy_email_subscription
     end
   end
+end
 
+Spree::Core::Engine.routes.draw do
+  
   namespace :admin do
 
     resources :pages do
