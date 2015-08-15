@@ -1,5 +1,5 @@
 class Spree::PagesController < Spree::BaseController
-  
+  layout :check_for_tiffany, only: :show
   before_filter :get_page, :only => :show
 
   def show
@@ -27,6 +27,14 @@ class Spree::PagesController < Spree::BaseController
   end
 
   private
+
+    def check_for_tiffany
+      if @page.path == "/tiffany-champagne-concierge-service"
+        'tiffany_page'
+      else
+        '/spree/layouts/spree_application'
+      end
+    end
 
     def get_page
       # The original includes url parameters, which wreaks havoc on google campaigns, but we still want to be able to raise the url with the parameters

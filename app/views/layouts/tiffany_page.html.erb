@@ -1,0 +1,87 @@
+<!doctype html>
+
+<!--[if lt IE 7 ]> <html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html lang="en"><!--<![endif]-->
+
+<head data-hook="inside_head">
+  <%= render :partial => 'spree/shared/head' %>
+  <%= render :partial => 'spree/shared/google_analytics_async' %>
+  <%= twitter_card %>
+  <%= opengraph %>
+  <meta property=”og:site_name” content=”ReserveBar”/>
+  <meta name="bitly-verification" content="eeb2823bcf6f"/>
+</head>
+
+<body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
+
+  <div id="fb-root"></div>
+  <script>
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=416911481660452";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+
+  <div id="containerWrapper" class="container">
+    <% unless (session[:age_gate] == 'passed' || request.path.include?('/pages/age_restriction')) %>
+      <% if session[:enable_age_gate] && (Spree::Config[:use_age_gate_on_all_pages] || Spree::AgeGate.apply_for_path?(request.path)) %>
+        <%= render :partial => 'spree/age_gate/modal_form' %>
+      <% end %>
+    <% end %>
+
+    <header id="header" class="row" data-hook>
+      <figure id="logo" class="columns alpha six" data-hook>
+        <%= logo %>
+      </figure>
+    </header>
+
+    <div id="wrapper" class="row" data-hook>
+      <% if content_for?(:sidebar) %>
+      <aside id="sidebar" class="columns alpha four" data-hook>
+        <%= yield :sidebar %>
+      </aside>
+      <% end %>
+
+      <div id="content" class="columns omega <% if !content_for?(:sidebar) %> sixteen alpha <% else %> twelve <% end %>" data-hook>
+        <%= flash_messages %>
+        <%= yield %>
+      </div>
+    </div>
+
+    <% cache( "footer-#{Spree::Taxon.find_by_name('Type').updated_at.to_i}") do %>
+      <footer id="footer" class="row" data-hook>
+        <%= render :partial => 'spree/shared/main_menu' %>
+      </footer>
+      <copyright>&copy; 2012 - 2015 ReserveBar.com</copyright>
+    <% end %>
+  </div>
+
+<!--[if lt IE 9 ]>
+<script type="text/javascript">
+  $(function(){
+    //IE <9 does not support last-child in CSS:
+    $("footer li:last-child").css("float","right");
+    $("footer li:last-child").css("margin-right","0px");
+    $("div#top-menu > ul > li:last-child").css("float", "right");
+    $("div#top-menu > ul > li:last-child").css("margin-right","0px");
+    $("div#top-menu > ul > li > a").click(function(){});
+    
+  });
+</script>
+<![endif]-->
+
+<%= render :partial => 'spree/shared/columnizer_ie' %>
+<script type="text/javascript" src="/assets/store/bootstrap.js"></script>
+<script type="text/javascript">
+  var touchClass = ('ontouchstart' in document.documentElement) ? 'touch' : 'no-touch';
+  $('body').addClass(touchClass);
+</script>
+
+</body>
+</html>
