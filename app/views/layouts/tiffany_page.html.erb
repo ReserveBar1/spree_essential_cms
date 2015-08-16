@@ -54,12 +54,7 @@
       </div>
     </div>
 
-    <% cache( "footer-#{Spree::Taxon.find_by_name('Type').updated_at.to_i}") do %>
-      <footer id="footer" class="row" data-hook>
-        <%= render :partial => 'spree/shared/main_menu' %>
-      </footer>
-      <copyright>&copy; 2012 - 2015 ReserveBar.com</copyright>
-    <% end %>
+    <copyright>&copy; 2012 - 2015 ReserveBar.com</copyright>
   </div>
 
 <!--[if lt IE 9 ]>
