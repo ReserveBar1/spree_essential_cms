@@ -35,12 +35,6 @@
       <% end %>
     <% end %>
 
-    <header id="header" class="row" data-hook>
-      <figure id="logo" class="columns alpha six" data-hook>
-        <%= image_tag(Spree::Config[:logo]) %>
-      </figure>
-    </header>
-
     <div id="wrapper" class="row" data-hook>
       <% if content_for?(:sidebar) %>
       <aside id="sidebar" class="columns alpha four" data-hook>
@@ -54,7 +48,14 @@
       </div>
     </div>
 
+
+    <center>
+    <figure id="logo" data-hook>
+      <%= image_tag(Spree::Config[:logo]) %>
+    </figure>
+    <br />
     <copyright>&copy; 2012 - 2015 ReserveBar.com</copyright>
+    </center>
   </div>
 
 <!--[if lt IE 9 ]>
