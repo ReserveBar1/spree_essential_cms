@@ -3,13 +3,14 @@ class Spree::PagesController < Spree::BaseController
   before_filter :get_page, :only => :show
 
   def show
+    substitute_product_values
     if @page.root?
       @posts    = Spree::Post.live.limit(5)    if SpreeEssentials.has?(:blog)
       @articles = Spree::Article.live.limit(5) if SpreeEssentials.has?(:news)
       render :template => 'spree/pages/home'
     elsif @page.preferred_newsletter_promo_code == 'Holiday25'
       render :template => 'spree/pages/special_promotion'
-    elsif @page.has_products?
+    elsif @page.has_products? && @page.default_product_view
       render :template => 'spree/pages/product_showcase'
     elsif @page.prefers_show_newsletter_form?
       render :template => 'spree/pages/two_column_with_newsletter_form'
@@ -53,4 +54,9 @@ class Spree::PagesController < Spree::BaseController
       @page.meta_title
     end
 
+    def substitute_product_values
+      return unless @page.products && @page.products.try(:length) == 1
+      product = @page.products.first
+      @page.contents.each { |c| c.body.gsub!(/<!-- price -->/, format("%.2f",product.price)) }
+    end
 end

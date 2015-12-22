@@ -12,6 +12,8 @@ en:
     visible: Visible
     explain_accessible: non-accessible pages must be coded into a custom controller.
     explain_visible: visible pages will show up in the main menu.
+    default_product_view:  Auto display product
+    explain_default_product_view:  Display default product layout
     
   content:
     model_name: Content

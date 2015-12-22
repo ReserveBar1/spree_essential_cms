@@ -44,6 +44,13 @@
     <%= error_message_on :page, :visible %>
   <% end %>
   
+  <%= form.field_container :default_product_view do %>
+    <%= form.check_box :default_product_view, :class => "text" %> &nbsp;
+    <%= form.label :default_product_view, t('page.default_product_view') %> 
+    &ndash; <em><%= t('page.explain_default_product_view') %></em>
+    <%= error_message_on :page, :default_product_view %>
+  <% end %>
+
   <div id="field_nav_title">
     <%= form.field_container :nav_title do %>
       <%= form.label :nav_title, t('page.nav_title') %><br />
